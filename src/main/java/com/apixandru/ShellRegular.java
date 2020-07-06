@@ -9,7 +9,7 @@ import java.io.InputStreamReader;
 
 import static com.apixandru.IoUtils.readStream;
 
-public class ShellRegular implements Shell {
+class ShellRegular implements Shell {
 
     private final JadbDevice device;
 
@@ -21,7 +21,11 @@ public class ShellRegular implements Shell {
     public String execute(String command) {
         try {
             try (BufferedReader br = new BufferedReader(new InputStreamReader(device.executeShell(command)))) {
-                return readStream(br);
+                String readStream = readStream(br);
+                if (readStream.endsWith(": Permission denied\n")) {
+                    throw new IllegalStateException(readStream);
+                }
+                return readStream;
             }
         } catch (IOException | JadbException e) {
             throw new IllegalStateException("Failed to execute " + command, e);

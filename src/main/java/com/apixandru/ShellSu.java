@@ -2,7 +2,7 @@ package com.apixandru;
 
 import se.vidstige.jadb.JadbDevice;
 
-public class ShellSu extends ShellRegular {
+class ShellSu extends ShellRegular {
 
     public ShellSu(JadbDevice device) {
         super(device);

@@ -10,11 +10,11 @@ public class AdbDevice {
         this.device = device;
     }
 
-    Shell suShell() {
+    public Shell suShell() {
         return new ShellSu(device);
     }
 
-    Shell shell() {
+    public Shell shell() {
         return new ShellRegular(device);
     }
 

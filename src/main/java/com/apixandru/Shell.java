@@ -16,4 +16,9 @@ public interface Shell {
         return executeGetList("ls -1 " + where);
     }
 
+    default boolean isDirectory(String who) {
+        String execute = execute("file -L " + who);
+        return execute.equals(who + ": directory\n");
+    }
+
 }
