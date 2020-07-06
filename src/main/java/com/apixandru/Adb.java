@@ -7,11 +7,13 @@ import se.vidstige.jadb.JadbException;
 import java.io.IOException;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 public class Adb {
 
     private final JadbConnection jadb = new JadbConnection();
 
-    public List<JadbDevice> getDevices() {
+    private List<JadbDevice> getDevicesRaw() {
         try {
             return jadb.getDevices();
         } catch (IOException | JadbException e) {
@@ -19,16 +21,19 @@ public class Adb {
         }
     }
 
-    public JadbDevice getDevice(String deviceSerial) {
+    public List<AdbDevice> getDevices() {
+        return getDevicesRaw()
+                .stream()
+                .map(AdbDevice::new)
+                .collect(toList());
+    }
+
+    public AdbDevice getDevice(String deviceSerial) {
         return getDevices()
                 .stream()
                 .filter(device -> deviceSerial.equals(device.getSerial()))
                 .findFirst()
                 .orElseThrow(() -> new IllegalStateException("Device " + deviceSerial + " is not connected!"));
-    }
-
-    public AdbDevice getAdbDevice(String deviceSerial) {
-        return new AdbDevice(getDevice(deviceSerial));
     }
 
 }

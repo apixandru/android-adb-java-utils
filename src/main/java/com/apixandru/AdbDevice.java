@@ -18,4 +18,8 @@ public class AdbDevice {
         return new ShellRegular(device);
     }
 
+    public String getSerial() {
+        return device.getSerial();
+    }
+
 }
