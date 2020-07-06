@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-final class IoUtils {
+class IoUtils {
 
     private static final int EOF = -1;
 

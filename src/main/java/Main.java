@@ -1,5 +1,6 @@
 import com.apixandru.Adb;
 import com.apixandru.AdbDevice;
+import com.apixandru.AdbFile;
 import com.apixandru.Shell;
 
 public class Main {
@@ -15,20 +16,9 @@ public class Main {
     }
 
     private static void executeInShell(Shell shell) {
-        for (String remoteFile : shell.ls(FOLDER_TO_COPY)) {
-            String path = joinPath(FOLDER_TO_COPY, remoteFile);
-            System.out.println(path + " " + shell.isDirectory(path));
+        for (AdbFile file : shell.ls(FOLDER_TO_COPY)) {
+            System.out.println(file.getName() + " " + shell.isDirectory(file));
         }
     }
 
-    private static String joinPath(String part1, String part2) {
-        String result = part1;
-        if (!part1.endsWith("/")) {
-            result += '/';
-        }
-        if (part2.startsWith("/")) {
-            return result + part2.substring(1);
-        }
-        return result + part2;
-    }
 }
